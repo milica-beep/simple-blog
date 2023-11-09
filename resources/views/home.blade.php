@@ -30,8 +30,20 @@
         <h2>My posts</h2>
         @foreach($posts as $post)
         <div style="background-color:gray; padding:10px;margin:10px;">
-            <h3>{{ $post['title'] }}</h3>
+            <h3>{{ $post['title'] }} by {{ $post->user->name }}</h3> 
             {{ $post['body'] }}
+
+            @if($user->id == $post->user_id)
+                <p><a href="/edit-post/{{$post->id}}">Edit</a></p>
+
+                <form action="/delete-post/{{$post->id}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button>Delete</button>
+                </form>
+            </div>
+            @endif
+            
         </div>
         @endforeach
     </div>
